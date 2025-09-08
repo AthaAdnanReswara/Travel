@@ -1,16 +1,9 @@
 <?php
-include 'koneksi.php';
+include 'Admin/koneksi.php';
 session_start();
 
-// cek apakah user sudah login
-if (!isset($_SESSION['user'])) {
-    
-    exit();
-}
-
-// cek apakah level user = pengunjung
-if ($_SESSION['user']['level'] != 'pengunjung') {
-    
+if (!isset($_SESSION['user']) || $_SESSION['role'] != "pengunjung") {
+    echo "<script>alert('Akses ditolak! Silakan login sebagai pengunjung');location.href='Admin/login.php'</script>";
     exit();
 }
 ?>
@@ -43,13 +36,16 @@ if ($_SESSION['user']['level'] != 'pengunjung') {
         <li><a href="about.php" class="active">About</a></li>
         <li><a href="blog.php" class="active">Blog</a></li>
         <li><a href="contact.php">Contact</a></li>
+        <li><a href="Admin/logout.php" class="dash">Logout</a></li>
+        <!-- <li class="setting-menu">
+          <a href="Admin/logout.php" id="settingBtn"><i class="fa fa-cog"></i> Setting</a>
+          <ul class="dropdown-menu" id="dropdownMenu">
+            <li><a href="profile.php"><i class="fa fa-user"></i> Profile</a></li>
+            <li><a href="Admin/logout.php"><i class="fa fa-sign-out-alt"></i> Logout</a></li>
+          </ul>
+        </li> -->
       </ul>
     </nav>
-    <div class="social-icons">
-      <a href="#"><i class="fab fa-facebook"></i></a>
-      <a href="#"><i class="fab fa-x-twitter"></i></a>
-      <a href="#"><i class="fab fa-linkedin"></i></a>
-    </div>
   </header>
 
     <!-- Hero Section -->
@@ -180,7 +176,7 @@ if ($_SESSION['user']['level'] != 'pengunjung') {
         <h4 class="subjudul">Pengalaman Yang Sering Dijelajahi</h4>
         <h2 class="judul">Perjalanan, Dirancang Khusus <br> untuk Anda</h2>
       </div>
-      <a href="isi/index.html" class="btn-paket">Jelajahi Lebih</a>
+      <a href="store.php" class="btn-paket">Jelajahi Lebih</a>
     </div>
 
     <div class="paket-container">
@@ -305,6 +301,20 @@ if ($_SESSION['user']['level'] != 'pengunjung') {
       </div>
     </footer>
   </footer>
+<script>document.addEventListener("DOMContentLoaded", function () {
+    const settingBtn = document.getElementById("settingBtn");
+    const dropdownMenu = document.getElementById("dropdownMenu");
 
+    settingBtn.addEventListener("click", function (e) {
+        e.preventDefault();
+        dropdownMenu.classList.toggle("show");
+    });
+
+    document.addEventListener("click", function (e) {
+        if (!settingBtn.contains(e.target) && !dropdownMenu.contains(e.target)) {
+            dropdownMenu.classList.remove("show");
+        }
+    });
+});</script>
 
   </html>

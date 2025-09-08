@@ -1,3 +1,12 @@
+<?php
+include 'Admin/koneksi.php';
+session_start();
+// Query ambil semua destinasi
+$sql = "SELECT * FROM destinasi ORDER BY created_at DESC";
+$result = mysqli_query($koneksi, $sql);
+?>
+
+
 <!DOCTYPE html>
 <html lang="id">
 
@@ -208,15 +217,16 @@
 
         <div class="row g-4">
             <!-- Card 1 -->
+        <?php while ($row = mysqli_fetch_assoc($result)) { ?>
             <div class="col-md-6 col-lg-3">
                 <div class="card shadow-sm h-100">
                     <div class="ratio ratio-4x3">
-                        <img src="gambar/Borobudur Temple, Indonesia Part of the largest….jpeg" class="img-fluid" style="object-fit:cover;"
+                        <img src="gambar/<?php echo $row['gambar']; ?>" class="img-fluid" style="object-fit:cover;"
                             alt="Bukit Embun">
                     </div>
                     <div class="card-body">
-                        <h5 class="fw-bold text-primary">Rp. 1.500.000/pax</h5>
-                        <p class="fw-semibold mb-1">Candi Borobudur</p>
+                        <h5 class="fw-bold text-primary">Rp <?php echo number_format($row['harga'], 0, ',', '.'); ?></h5>
+                        <p class="fw-semibold mb-1"><?php echo $row['nama']; ?></p>
                         <p class="small text-muted"><i class="fa-regular fa-calendar"></i> 31 MARET 2025</p>
                         <button class="btn btn-warning w-100 fw-bold" data-bs-toggle="modal"
                             data-bs-target="#modalBukit">
@@ -231,16 +241,15 @@
                 <div class="modal-dialog modal-dialog-centered modal-lg">
                     <div class="modal-content">
                         <div class="modal-header bg-warning text-dark">
-                            <h5 class="modal-title fw-bold" id="modalBukitLabel">Candi Borobudur</h5>
+                            <h5 class="modal-title fw-bold" id="modalBukitLabel"><?php echo $row['nama']; ?></h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
                         </div>
                         <div class="modal-body text-center">
                             <img style="width: 900px; height: 460px;"
-                                class="img-fluid rounded mb-3" alt="Bukit Embun" src="gambar/Borobudur Temple, Indonesia Part of the largest….jpeg">
-                            <h5 class="text-primary fw-bold">Rp. 1.500.000/pax</h5>
+                                class="img-fluid rounded mb-3" alt="Bukit Embun" src="gambar/<?php echo $row['gambar']; ?>">
+                            <h5 class="text-primary fw-bold">Harga: Rp <?php echo number_format($row['harga'], 0, ',', '.'); ?></h5>
                             <p><i class="fa-regular fa-calendar"></i> Berangkat: 31 Maret 2025</p>
-                            <p>Paket wisata 10 hari 7 malam ke Hungary & Eastern Europe dengan fasilitas hotel
-                                berbintang, transportasi nyaman, dan tour guide profesional.</p>
+                            <p><?php echo $row['deskripsi']; ?></p>
                         </div>
                         <div class="modal-footer">
                             <a href="pesan.php" class="btn btn-success fw-bold">Pesan Sekarang</a>
@@ -249,304 +258,7 @@
                     </div>
                 </div>
             </div>
-
-            <!-- Card 2 -->
-            <div class="col-md-6 col-lg-3">
-                <div class="card shadow-sm h-100">
-                    <div class="ratio ratio-4x3">
-                        <img src="gambar/bukit embun.jpeg" class="img-fluid" style="object-fit:cover;" alt="Paris">
-                    </div>
-                    <div class="card-body">
-                        <h5 class="fw-bold text-primary">Rp. 1.000.000/pax</h5>
-                        <p class="fw-semibold mb-1">Bukit Embun</p>
-                        <p class="small text-muted"><i class="fa-regular fa-calendar"></i> 15 APRIL 2025</p>
-                        <button class="btn btn-warning w-100 fw-bold" data-bs-toggle="modal"
-                            data-bs-target="#modalParis">
-                            LIHAT
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Modal 2 -->
-            <div class="modal fade" id="modalParis" tabindex="-1" aria-labelledby="modalParisLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered modal-lg">
-                    <div class="modal-content">
-                        <div class="modal-header bg-warning text-dark">
-                            <h5 class="modal-title fw-bold" id="modalParisLabel">Bukit Embun</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
-                        </div>
-                        <div class="modal-body text-center">
-                            <img style="width: 900px; height: 460px;" src="gambar/bukit embun.jpeg"
-                                class="img-fluid rounded mb-3" alt="Paris">
-                            <h5 class="text-primary fw-bold">Rp. 1.000.000/pax</h5>
-                            <p><i class="fa-regular fa-calendar"></i> Berangkat: 15 April 2025</p>
-                            <p>Eksplorasi keindahan Paris dan Swiss, lengkap dengan kunjungan ke Menara Eiffel, Louvre,
-                                dan Pegunungan Alpen.</p>
-                        </div>
-                        <div class="modal-footer">
-                            <a href="pesan.php" class="btn btn-success fw-bold">Pesan Sekarang</a>
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card 3 -->
-            <div class="col-md-6 col-lg-3 card-item d-none ">
-                <div class="card shadow-sm h-100">
-                    <div class="ratio ratio-4x3">
-                        <img src="gambar/etomia.jpeg" class="img-fluid" style="object-fit:cover;"
-                            alt="Bukit Embun">
-                    </div>
-                    <div class="card-body">
-                        <h5 class="fw-bold text-primary">Rp. 33.890.000/pax</h5>
-                        <p class="fw-semibold mb-1">Estonia</p>
-                        <p class="small text-muted"><i class="fa-regular fa-calendar"></i> 31 MARET 2025</p>
-                        <button class="btn btn-warning w-100 fw-bold" data-bs-toggle="modal"
-                            data-bs-target="#modalBukit">
-                            LIHAT
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Modal 3 -->
-            <div class="modal fade" id="modalBukit" tabindex="-1" aria-labelledby="modalBukitLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered modal-lg">
-                    <div class="modal-content">
-                        <div class="modal-header bg-warning text-dark">
-                            <h5 class="modal-title fw-bold" id="modalBukitLabel">Estonia</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
-                        </div>
-                        <div class="modal-body text-center">
-                            <img style="width: 900px; height: 460px;" src="g"
-                                class="img-fluid rounded mb-3" alt="Bukit Embun" src="gambar/etomia.jpeg">
-                            <h5 class="text-primary fw-bold">Rp. 33.890.000/pax</h5>
-                            <p><i class="fa-regular fa-calendar"></i> Berangkat: 31 Maret 2025</p>
-                            <p>Paket wisata 10 hari 7 malam ke Hungary & Eastern Europe dengan fasilitas hotel
-                                berbintang, transportasi nyaman, dan tour guide profesional.</p>
-                        </div>
-                        <div class="modal-footer">
-                            <a href="pesan.php" class="btn btn-success fw-bold">Pesan Sekarang</a>
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card 4 -->
-            <div class="col-md-6 col-lg-3  card-item d-none">
-                <div class="card shadow-sm h-100">
-                    <div class="ratio ratio-4x3">
-                        <img src="gambar/Bali nusapanida.jpeg" class="img-fluid" style="object-fit:cover;" alt="Paris">
-                    </div>
-                    <div class="card-body">
-                        <h5 class="fw-bold text-primary">Rp. 45.500.000/pax</h5>
-                        <p class="fw-semibold mb-1">Bali</p>
-                        <p class="small text-muted"><i class="fa-regular fa-calendar"></i> 15 APRIL 2025</p>
-                        <button class="btn btn-warning w-100 fw-bold" data-bs-toggle="modal"
-                            data-bs-target="#modalParis">
-                            LIHAT
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Modal 4 -->
-            <div class="modal fade" id="modalParis" tabindex="-1" aria-labelledby="modalParisLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered modal-lg">
-                    <div class="modal-content">
-                        <div class="modal-header bg-warning text-dark">
-                            <h5 class="modal-title fw-bold" id="modalParisLabel">Bali</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
-                        </div>
-                        <div class="modal-body text-center">
-                            <img style="width: 900px; height: 460px;" src="gambar/Bali nusapanida.jpeg"
-                                class="img-fluid rounded mb-3" alt="Paris">
-                            <h5 class="text-primary fw-bold">Rp. 45.500.000/pax</h5>
-                            <p><i class="fa-regular fa-calendar"></i> Berangkat: 15 April 2025</p>
-                            <p>Eksplorasi keindahan Paris dan Swiss, lengkap dengan kunjungan ke Menara Eiffel, Louvre,
-                                dan Pegunungan Alpen.</p>
-                        </div>
-                        <div class="modal-footer">
-                            <a href="pesan.php" class="btn btn-success fw-bold">Pesan Sekarang</a>
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card 5 -->
-            <div class="col-md-6 col-lg-3  card-item d-none">
-                <div class="card shadow-sm h-100">
-                    <div class="ratio ratio-4x3">
-                        <img src="gambar/gunng.jpeg" class="img-fluid" style="object-fit:cover;"
-                            alt="Bukit Embun">
-                    </div>
-                    <div class="card-body">
-                        <h5 class="fw-bold text-primary">Rp. 33.890.000/pax</h5>
-                        <p class="fw-semibold mb-1">Gunung</p>
-                        <p class="small text-muted"><i class="fa-regular fa-calendar"></i> 31 MARET 2025</p>
-                        <button class="btn btn-warning w-100 fw-bold" data-bs-toggle="modal"
-                            data-bs-target="#modalBukit">
-                            LIHAT
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Modal 5 -->
-            <div class="modal fade" id="modalBukit" tabindex="-1" aria-labelledby="modalBukitLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered modal-lg">
-                    <div class="modal-content">
-                        <div class="modal-header bg-warning text-dark">
-                            <h5 class="modal-title fw-bold" id="modalBukitLabel">Gunung</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
-                        </div>
-                        <div class="modal-body text-center">
-                            <img style="width: 900px; height: 460px;" 
-                                class="img-fluid rounded mb-3" alt="Bukit Embun" src="gambar/gunng.jpeg">
-                            <h5 class="text-primary fw-bold">Rp. 33.890.000/pax</h5>
-                            <p><i class="fa-regular fa-calendar"></i> Berangkat: 31 Maret 2025</p>
-                            <p>Paket wisata 10 hari 7 malam ke Hungary & Eastern Europe dengan fasilitas hotel
-                                berbintang, transportasi nyaman, dan tour guide profesional.</p>
-                        </div>
-                        <div class="modal-footer">
-                            <a href="pesan.php" class="btn btn-success fw-bold">Pesan Sekarang</a>
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card 6 -->
-            <div class="col-md-6 col-lg-3  card-item d-none">
-                <div class="card shadow-sm h-100">
-                    <div class="ratio ratio-4x3">
-                        <img src="gambar/raja ampat.jpeg" class="img-fluid" style="object-fit:cover;" alt="Paris">
-                    </div>
-                    <div class="card-body">
-                        <h5 class="fw-bold text-primary">Rp. 45.500.000/pax</h5>
-                        <p class="fw-semibold mb-1">Raja Ampat</p>
-                        <p class="small text-muted"><i class="fa-regular fa-calendar"></i> 15 APRIL 2025</p>
-                        <button class="btn btn-warning w-100 fw-bold" data-bs-toggle="modal"
-                            data-bs-target="#modalParis">
-                            LIHAT
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Modal 6 -->
-            <div class="modal fade" id="modalParis" tabindex="-1" aria-labelledby="modalParisLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered modal-lg">
-                    <div class="modal-content">
-                        <div class="modal-header bg-warning text-dark">
-                            <h5 class="modal-title fw-bold" id="modalParisLabel">Raja Ampat</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
-                        </div>
-                        <div class="modal-body text-center">
-                            <img style="width: 900px; height: 460px;" src="gambar/raja ampat.jpeg"
-                                class="img-fluid rounded mb-3" alt="Paris">
-                            <h5 class="text-primary fw-bold">Rp. 45.500.000/pax</h5>
-                            <p><i class="fa-regular fa-calendar"></i> Berangkat: 15 April 2025</p>
-                            <p>Eksplorasi keindahan Paris dan Swiss, lengkap dengan kunjungan ke Menara Eiffel, Louvre,
-                                dan Pegunungan Alpen.</p>
-                        </div>
-                        <div class="modal-footer">
-                            <a href="pesan.php" class="btn btn-success fw-bold">Pesan Sekarang</a>
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card 7 -->
-            <div class="col-md-6 col-lg-3">
-                <div class="card shadow-sm h-100">
-                    <div class="ratio ratio-4x3">
-                        <img src="gambar/matera_itali.jpeg" class="img-fluid" style="object-fit:cover;" alt="Tokyo">
-                    </div>
-                    <div class="card-body">
-                        <h5 class="fw-bold text-primary">Rp. 28.900.000/pax</h5>
-                        <p class="fw-semibold mb-1">Itali</p>
-                        <p class="small text-muted"><i class="fa-regular fa-calendar"></i> 10 MEI 2025</p>
-                        <button class="btn btn-warning w-100 fw-bold" data-bs-toggle="modal"
-                            data-bs-target="#modalTokyo">
-                            LIHAT
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Modal 7 -->
-            <div class="modal fade" id="modalTokyo" tabindex="-1" aria-labelledby="modalTokyoLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered modal-lg">
-                    <div class="modal-content">
-                        <div class="modal-header bg-warning text-dark">
-                            <h5 class="modal-title fw-bold" id="modalTokyoLabel">Itali</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
-                        </div>
-                        <div class="modal-body text-center">
-                            <img style="width: 900px; height: 460px;" src="gambar/matera_itali.jpeg"
-                                class="img-fluid rounded mb-3" alt="Tokyo">
-                            <h5 class="text-primary fw-bold">Rp. 28.900.000/pax</h5>
-                            <p><i class="fa-regular fa-calendar"></i> Berangkat: 10 Mei 2025</p>
-                            <p>Menikmati musim semi di Jepang, berkunjung ke Tokyo, Kyoto, dan Osaka dengan suasana
-                                sakura yang indah.</p>
-                        </div>
-                        <div class="modal-footer">
-                            <a href="pesan.php" class="btn btn-success fw-bold">Pesan Sekarang</a>
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card 8 -->
-            <div class="col-md-6 col-lg-3">
-                <div class="card shadow-sm h-100">
-                    <div class="ratio ratio-4x3">
-                        <img src="gambar/singapure.jpeg" class="img-fluid"
-                            style="object-fit:cover;" alt="Bali">
-                    </div>
-                    <div class="card-body">
-                        <h5 class="fw-bold text-primary">Rp. 9.500.000</h5>
-                        <p class="fw-semibold mb-1">Singapore</p>
-                        <p class="small text-muted"><i class="fa-regular fa-calendar"></i> 20 JUNI 2025</p>
-                        <button class="btn btn-warning w-100 fw-bold" data-bs-toggle="modal"
-                            data-bs-target="#modalBali">
-                            LIHAT
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Modal 8 -->
-            <div class="modal fade" id="modalBali" tabindex="-1" aria-labelledby="modalBaliLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered modal-lg">
-                    <div class="modal-content">
-                        <div class="modal-header bg-warning text-dark">
-                            <h5 class="modal-title fw-bold" id="modalBaliLabel">Singapore</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
-                        </div>
-                        <div class="modal-body text-center">
-                            <img style="width: 900px; height: 460px;"
-                                src="gambar/singapure.jpeg"
-                                class="img-fluid rounded mb-3" alt="Bali">
-                            <h5 class="text-primary fw-bold">Rp. 9.500.000</h5>
-                            <p><i class="fa-regular fa-calendar"></i> Berangkat: 20 Juni 2025</p>
-                            <p>Paket wisata 5 hari 4 malam di Bali & Nusa Penida dengan pantai indah, snorkeling, dan
-                                budaya khas Bali.</p>
-                        </div>
-                        <div class="modal-footer">
-                            <a href="pesan.php" class="btn btn-success fw-bold">Pesan Sekarang</a>
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <?php } ?>
         </div>
 
 

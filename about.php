@@ -1,3 +1,7 @@
+<?php
+session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -24,13 +28,15 @@
         <li><a href="#" class="active">About</a></li>
         <li><a href="blog.php" class="active">Blog</a></li>
         <li><a href="contact.php">Contact</a></li>
+        <li class="setting-menu">
+          <a href="#" id="settingBtn"><i class="fa fa-cog"></i> Setting</a>
+          <ul class="dropdown-menu" id="dropdownMenu">
+            <li><a href="profile.php"><i class="fa fa-user"></i> Profile</a></li>
+            <li><a href="logout.php"><i class="fa fa-sign-out-alt"></i> Logout</a></li>
+          </ul>
+        </li>
       </ul>
     </nav>
-    <div class="social-icons">
-      <a href="#"><i class="fab fa-facebook"></i></a>
-      <a href="#"><i class="fab fa-x-twitter"></i></a>
-      <a href="#"><i class="fab fa-linkedin"></i></a>
-    </div>
   </header>
 
   <main class="container" style="background-color: rgb(214, 219, 219);"><br>
@@ -78,4 +84,5 @@
       <p>Copyright @ 2025 69Travel, All Rights Reserved</p>
     </div>
   </footer>
+  <script src="script.js"></script>
 </html>

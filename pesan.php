@@ -1,3 +1,43 @@
+<?php
+session_start();
+include 'Admin/koneksi.php';
+
+// cek apakah user sudah login
+if (!isset($_SESSION['user'])) {
+    header("Location: Admin/login.php");
+    exit();
+}
+
+$user_id = $_SESSION['user']['id']; // ambil id user dari session
+$destinasi_id = $_GET['id']; // id destinasi dikirim lewat tombol Booking
+
+// ambil data destinasi
+$sql = "SELECT * FROM destinasi WHERE id='$destinasi_id'";
+$dest = mysqli_query($koneksi, $sql);
+$data = mysqli_fetch_assoc($dest);
+
+if (isset($_POST['simpan'])) {
+    $tanggal = $_POST['tanggal'];
+    $jumlah_orang = $_POST['jumlah_orang'];
+    $metode_bayar = $_POST['metode_bayar'];
+    $catatan = $_POST['catatan'];
+
+    // hitung total harga
+    $total = $data['harga'] * $jumlah_orang;
+
+    $insert = "INSERT INTO booking 
+               (user_id, destinasi_id, tanggal, jumlah_orang, metode_bayar, catatan, total, status, created_at) 
+               VALUES 
+               ('$user_id', '$destinasi_id', '$tanggal', '$jumlah_orang', '$metode_bayar', '$catatan', '$total', 'Pending', NOW())";
+
+    if (mysqli_query($koneksi, $insert)) {
+        echo "<script>alert('Booking berhasil!'); window.location='riwayat_booking.php';</script>";
+    } else {
+        echo "Error: " . mysqli_error($koneksi);
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="id">
 
