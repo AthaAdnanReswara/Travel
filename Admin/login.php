@@ -16,7 +16,7 @@ if (isset($_POST['login'])) {
         if ($_SESSION['role'] == "admin") {
             echo '<script>alert("Login berhasil sebagai Admin");location.href="index.php"</script>';
         } else {
-            echo '<script>alert("Login berhasil sebagai Pengunjung");location.href="../index.php"</script>';
+            echo '<script>alert("Login berhasil sebagai Pengunjung");location.href="../store.php"</script>';
         }
     } else {
         echo '<script>alert("Maaf, Username/Password salah");</script>';

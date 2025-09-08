@@ -82,37 +82,12 @@ nav ul li a .dash {
             color: white !important;
         }
 
-/*.dropdown-menu {
-  position: absolute;
-  top: 100%;   /* tepat di bawah tombol */
-  /*right: 0;
-  background: #fff;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  min-width: 150px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(-10px);
-  transition: all 0.3s ease;
-  z-index: 999;
+.social-icons a {
+  margin-left: 10px;
+  color: #000;
+  font-size: 18px;
 }
 
-.dropdown-menu li a {
-  padding: 10px;
-  color: #333;
-}
-
-.dropdown-menu li a:hover {
-  background: #f4f4f4;
-}
-
-.dropdown-menu.show {
-  opacity: 1;
-  visibility: visible;
-  transform: translateY(0);
-}
 
 /* Hero section */
 .hero {

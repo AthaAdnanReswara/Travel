@@ -73,7 +73,7 @@ if (!isset($_SESSION['user']) || $_SESSION['role'] != "admin") {
 
             <!-- Nav Item - Tables -->
             <li class="nav-item">
-                <a class="nav-link" href="?=page=booking">
+                <a class="nav-link" href="?page=booking">
                     <i class="fas fa-fw fa-calendar-check"></i>
                     <span>Booking</span></a>
             </li>

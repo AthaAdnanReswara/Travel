@@ -1,15 +1,3 @@
-<?php
-include 'Admin/koneksi.php';
-session_start();
-
-if (!isset($_SESSION['user']) || $_SESSION['role'] != "pengunjung") {
-    echo "<script>alert('Akses ditolak! Silakan login sebagai pengunjung');location.href='Admin/login.php'</script>";
-    exit();
-}
-?>
-
-
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -36,7 +24,6 @@ if (!isset($_SESSION['user']) || $_SESSION['role'] != "pengunjung") {
         <li><a href="about.php" class="active">About</a></li>
         <li><a href="blog.php" class="active">Blog</a></li>
         <li><a href="contact.php">Contact</a></li>
-        <li><a href="Admin/logout.php" class="dash">Logout</a></li>
         <!-- <li class="setting-menu">
           <a href="Admin/logout.php" id="settingBtn"><i class="fa fa-cog"></i> Setting</a>
           <ul class="dropdown-menu" id="dropdownMenu">
@@ -46,6 +33,11 @@ if (!isset($_SESSION['user']) || $_SESSION['role'] != "pengunjung") {
         </li> -->
       </ul>
     </nav>
+    <div class="social-icons">
+      <a class="i" href="#"><i class="fab fa-facebook"></i></a>
+      <a class="i" href="#"><i class="fab fa-x-twitter"></i></a>
+      <a class="i" href="#"><i class="fab fa-linkedin"></i></a>
+    </div>
   </header>
 
     <!-- Hero Section -->
