@@ -25,10 +25,10 @@ function ubahStatusBooking($koneksi, $id, $status) {
 // jika ada aksi update
 if (isset($_GET['aksi']) && isset($_GET['id'])) {
     if (ubahStatusBooking($koneksi, $_GET['id'], $_GET['aksi'])) {
-        echo "<script>alert('Status booking berhasil diperbarui!');location.href='dashboard_booking.php';</script>";
+        echo "<script>alert('Status booking berhasil diperbarui!');location.href='?page=booking';</script>";
         exit();
     } else {
-        echo "<script>alert('Gagal memperbarui status!');location.href='dashboard_booking.php';</script>";
+        echo "<script>alert('Gagal memperbarui status!');location.href='?page=booking';</script>";
         exit();
     }
 }

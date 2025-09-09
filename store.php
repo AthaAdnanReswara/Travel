@@ -11,189 +11,449 @@ $result = mysqli_query($koneksi, $sql);
 <html lang="id">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tour International</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <style>
-        * {margin: 0;padding: 0;box-sizing: border-box;}
-        a {text-decoration: none;color: inherit;}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>69 Travel</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-        /* Top bar */
-        .top-bar {background-color: #007d8c;color: #fff;padding: 5px 20px;display: flex;justify-content: space-between;font-size: 14px;}
+body, html {
+  font-family: 'Segoe UI', sans-serif;
+  color: #ffffff;
+  background-color: #f5f5f5;
+}
 
-        /* Header */
-        header {background-color: #fff;padding: 15px 20px;display: flex;align-items: center;justify-content: space-between;color: #000;box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);}
-        .logo {font-size: 20px;font-weight: bold;}
+a {
+  text-decoration: none;
+  color: inherit;
+}
 
-        /* Nav bar  */
-        nav ul {display: flex;list-style: none;gap: 20px;margin-left: 700px;}
-        nav a {text-decoration: none;color: black;padding-bottom: 5px;}
-        nav a:hover {border-bottom: 2px solid lightblue;}
-        nav ul li a {color: #000;font-weight: 500;}
-        .dashboard-btn {margin-left: 250px;background-color: #007d8c;padding: 8px 16px;border-radius: 10px;color: white !important;}
 
-        .social-icons a {margin-left: 10px;color: #000;font-size: 18px;}
+/* Top bar */
+.top-bar {
+  background-color: #007d8c;
+  color: #fff;
+  padding: 5px 20px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+}
 
-        /* Tombol WhatsApp */
-        .whatsapp-float {position: fixed;bottom: 20px;right: 20px;background-color: #25D366;color: white;border-radius: 50px;padding: 12px 18px;font-size: 16px;font-weight: 600;display: flex;align-items: center;box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);z-index: 1000;text-decoration: none;}
-        .whatsapp-float i {font-size: 24px;margin-right: 8px;}
-        .whatsapp-float:hover {background-color: #20b955;color: white;}
 
-        .fo {background: #000000;color: #f1f5f9;padding: 20px 0;text-align: center;font-size: 14px;}
-        .fo .footer-blog p {margin: 0;letter-spacing: 0.5px;}
-        .fo .footer-blog p:hover {color: #22c55e;transition: 0.3s;}
+/* Header */
+header {
+  background-color: #fff;
+  padding: 15px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #000;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
 
-        /* Card */
-        .card .ratio {border-radius: 30px;overflow: hidden;}
-        .card .ratio img {border-radius: 0;}
-    </style>
+.logo {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+
+/* Nav bar  */
+nav ul {
+  display: flex;
+  list-style: none;
+  gap: 20px;
+  margin-left: 700px;
+}
+nav ul li {
+  position: relative;
+}
+nav a{
+  text-decoration: none;
+  color: black;
+  padding-bottom: 5px;
+}
+
+nav a:active{
+  border-bottom: 2px solid blue;
+  color: blue;
+}
+
+nav a:hover{
+  border-bottom: 2px solid lightblue;
+}
+
+nav ul li a {
+  color: #000;
+  font-weight: 500;
+}
+
+nav ul li a .dash {
+            margin-left: 250px;
+            background-color: #007d8c;
+            padding: 8px 16px;
+            border-radius: 10px;
+            color: white !important;
+        }
+
+.social-icons a {
+  margin-left: 10px;
+  color: #000;
+  font-size: 18px;
+}
+
+    .btn-login {
+      background: #007d8c;
+      color: #fff !important;
+      font-weight: bold;
+    }
+
+    .btn-home {
+      background: #facc15;
+      color: #000 !important;
+      font-weight: bold;
+    }
+
+    .social-icons a {
+      margin-left: 10px;
+      color: #475569;
+      font-size: 18px;
+      transition: 0.3s;
+    }
+
+    .social-icons a:hover {
+      color: #007d8c;
+    }
+
+    /* Section Title */
+    h2.section-title {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 40px;
+      color: #007d8c;
+      text-align: center;
+      position: relative;
+    }
+
+    h2.section-title::after {
+      content: "";
+      display: block;
+      width: 60px;
+      height: 4px;
+      background: #007d8c;
+      margin: 10px auto 0;
+      border-radius: 2px;
+    }
+
+    /* Card Produk */
+    .card {
+      border: none;
+      border-radius: 15px;
+      overflow: hidden;
+      transition: all 0.4s ease;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    }
+
+    .card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+    }
+
+    .card img {
+      transition: transform 0.4s ease;
+    }
+
+    .card:hover img {
+      transform: scale(1.08);
+    }
+
+    .btn-warning {
+      border-radius: 25px;
+      font-weight: bold;
+    }
+
+    /* Footer */
+    footer {
+      background: #0f172a;
+      color: #94a3b8;
+      padding: 30px 20px;
+      margin-top: 50px;
+    }
+
+    footer a {
+      color: #22d3ee;
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      color: #38bdf8;
+    }
+
+    /* Tombol WhatsApp */
+    .whatsapp-float {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #25D366;
+      color: white;
+      border-radius: 50px;
+      padding: 12px 18px;
+      font-size: 16px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+      z-index: 1000;
+      text-decoration: none;
+      transition: 0.3s;
+    }
+
+    .whatsapp-float i {
+      font-size: 22px;
+      margin-right: 8px;
+    }
+
+    .whatsapp-float:hover {
+      background-color: #20b955;
+    }
+
+    /* Animasi Fade In */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.8s ease;
+    }
+
+    .fade-in.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+  <style>
+      .btn-login {
+    background: #0077b6;        /* Biru travel */
+    color: #fff;
+    padding: 8px 18px;
+    border-radius: 25px;        /* Membulat */
+    font-weight: 500;
+    text-decoration: none;
+    font-size: 15px;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .btn-login:hover {
+    background: #005f86;        /* Biru lebih gelap saat hover */
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 119, 182, 0.3);
+    color: #fff;
+  }
+
+  .btn-login i {
+    font-size: 16px;
+  }
+  </style>
 </head>
 
-<body class="bg-light">
+<body>
 
-    <!-- Top Info -->
-    <div class="top-bar">
-        <div class="left-info">69travel@gmail.com</div>
-        <div class="right-info">Bandar Lampung, Teluk Betung</div>
+  <!-- Top Info -->
+  <div class="top-bar">
+    <div class="left-info"><i class="fa-solid fa-envelope"></i> 69travel@gmail.com</div>
+    <div class="right-info"><i class="fa-solid fa-location-dot"></i> Bandar Lampung, Teluk Betung</div>
+  </div>
+
+  <!-- Header Navigation -->
+  <header>
+    <div class="logo"><i class="fa-solid fa"></i> 69 Travel</div>
+    <nav>
+       <ul>
+        <li><a href="index.php" class="active">Home</a>
+        <li><a href="about.php" class="active">About</a></li>
+        <li><a href="#" class="active">Destination</a></li>
+        <li><a href="blog.php" class="active">Blog</a></li>
+        <li><a href="contact.php">Contact</a></li>
+     </ul>
+   </nav>
+    <!-- User dropdown -->
+      <?php if (isset($_SESSION['user'])) { ?>
+        <div class="dropdown">
+          <a class="d-flex align-items-center text-decoration-none dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="user" width="32" height="32" class="rounded-circle me-2">
+            <span><?= htmlspecialchars($_SESSION['user']['nama']); ?></span>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li><a class="dropdown-item" href="Admin/profile.php"><i class="fa-solid fa-user"></i> Profile</a></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li><a class="dropdown-item text-danger" href="Admin/logout.php"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
+          </ul>
+        </div>
+      <?php } else { ?>
+       <a href="Admin/login.php" class="btn-login"><i class="fa-solid fa-right-to-bracket"></i> Login</a>
+      <?php } ?>
     </div>
+  </header>
 
-    <!-- Header Navigation -->
-    <header>
-        <div class="logo">69 Travel</div>
-        <nav>
-            <ul>
-                <?php if (isset($_SESSION['user'])) { ?>
-                    <li><a href="Admin/logout.php" class="dash">Logout</a></li>
+
+  <!-- Section Paket -->
+  <div class="container py-5">
+    <h2 class="section-title">Paket Wisata Populer</h2>
+    <div class="row g-4">
+      <?php
+      $i = 0;
+      while ($row = mysqli_fetch_assoc($result)) {
+        $i++;
+        $hidden = $i > 8 ? "d-none card-item" : "";
+      ?>
+        <div class="col-md-6 col-lg-3 fade-in <?php echo $hidden; ?>">
+          <div class="card h-100">
+            <img src="gambar/<?php echo $row['gambar']; ?>" class="img-fluid" style="object-fit:cover; height:200px;" alt="<?php echo $row['nama']; ?>">
+            <div class="card-body">
+              <h5 class="fw-bold text-primary">Rp <?php echo number_format($row['harga'], 0, ',', '.'); ?></h5>
+              <p class="fw-semibold mb-1"><?php echo $row['nama']; ?></p>
+              <button class="btn btn-warning w-100" data-bs-toggle="modal"
+                data-bs-target="#modalDestinasi<?php echo $row['id']; ?>">
+                LIHAT
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Modal Detail Compact -->
+        <div class="modal fade" id="modalDestinasi<?php echo $row['id']; ?>" tabindex="-1" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" style="max-width: 500px;"> <!-- Lebar dibatasi -->
+            <div class="modal-content shadow-lg border-0 rounded-4 overflow-hidden">
+
+              <!-- Header -->
+              <div class="modal-header text-white py-2" style="background: linear-gradient(90deg, #007d8c, #00bcd4);">
+                <h6 class="modal-title fw-bold mb-0">
+                  <i class="fa-solid fa-map-location-dot"></i> <?php echo $row['nama']; ?>
+                </h6>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+              </div>
+
+              <!-- Body -->
+              <div class="modal-body px-3 py-3">
+                <img class="img-fluid rounded-3 shadow-sm mb-2"
+                  src="gambar/<?php echo $row['gambar']; ?>"
+                  alt="<?php echo $row['nama']; ?>"
+                  style="width:100%; max-height:180px; object-fit:cover;">
+
+                <!-- Harga -->
+                <div class="p-2 mb-2 text-center bg-light rounded-3 shadow-sm small">
+                  <h6 class="fw-bold text-primary mb-1">
+                    <i class="fa-solid fa-tags"></i> Rp <?php echo number_format($row['harga'], 0, ',', '.'); ?>
+                  </h6>
+                  <small class="text-muted"><i class="fa-regular fa-calendar"></i> Berangkat: 31 Maret 2025</small>
+                </div>
+
+                <!-- Deskripsi -->
+                <p class="text-secondary small lh-base mb-0" style="text-align: justify;">
+                  <?php echo $row['deskripsi']; ?>
+                </p>
+              </div>
+
+              <!-- Footer -->
+              <div class="modal-footer border-0 d-flex justify-content-between px-3 pb-3">
+                <?php if (!isset($_SESSION['user'])) { ?>
+                  <button class="btn btn-success btn-sm fw-bold px-3" data-bs-toggle="modal"
+                    data-bs-target="#modalLogin" data-bs-dismiss="modal">
+                    <i class="fa-solid fa-ticket"></i> Pesan
+                  </button>
                 <?php } else { ?>
-                    <li><a href="Admin/login.php" class="dash">Login</a></li>
+                  <a href="pesan.php?destinasi=<?= $row['id'] ?>" class="btn btn-success btn-sm fw-bold px-3">
+                    <i class="fa-solid fa-ticket"></i> Pesan
+                  </a>
                 <?php } ?>
-                <li><a href="index.php" class="dashboard-btn">Home</a></li>
-            </ul>
-        </nav>
-        <div class="social-icons">
-            <a href="#"><i class="fab fa-facebook"></i></a>
-            <a href="#"><i class="fab fa-x-twitter"></i></a>
-            <a href="#"><i class="fab fa-linkedin"></i></a>
-        </div>
-    </header>
-
-    <!-- Section -->
-    <div class="container py-3">
-        <h2 class="text-center mb-4 fw-bold">✈️ Paket Wisata Populer</h2>
-
-        <div class="row g-4">
-            <?php while ($row = mysqli_fetch_assoc($result)) { ?>
-            <div class="col-md-6 col-lg-3">
-                <div class="card shadow-sm h-100">
-                    <div class="ratio ratio-4x3">
-                        <img src="gambar/<?php echo $row['gambar']; ?>" class="img-fluid" style="object-fit:cover;"
-                            alt="<?php echo $row['nama']; ?>">
-                    </div>
-                    <div class="card-body">
-                        <h5 class="fw-bold text-primary">Rp <?php echo number_format($row['harga'], 0, ',', '.'); ?></h5>
-                        <p class="fw-semibold mb-1"><?php echo $row['nama']; ?></p>
-                        <button class="btn btn-warning w-100 fw-bold" data-bs-toggle="modal"
-                            data-bs-target="#modalDestinasi<?php echo $row['id']; ?>">
-                            LIHAT
-                        </button>
-                    </div>
-                </div>
+                <button type="button" class="btn btn-outline-secondary btn-sm px-3" data-bs-dismiss="modal">
+                  <i class="fa-solid fa-xmark"></i> Tutup
+                </button>
+              </div>
             </div>
-
-            <!-- Modal Detail -->
-            <div class="modal fade" id="modalDestinasi<?php echo $row['id']; ?>" tabindex="-1" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered modal-lg">
-                    <div class="modal-content">
-                        <div class="modal-header bg-warning text-dark">
-                            <h5 class="modal-title fw-bold"><?php echo $row['nama']; ?></h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                        </div>
-                        <div class="modal-body text-center">
-                            <img style="width: 100%; height: 400px; object-fit:cover;"
-                                class="img-fluid rounded mb-3" src="gambar/<?php echo $row['gambar']; ?>">
-                            <h5 class="text-primary fw-bold">Harga: Rp <?php echo number_format($row['harga'], 0, ',', '.'); ?></h5>
-                            <p><i class="fa-regular fa-calendar"></i> Berangkat: 31 Maret 2025</p>
-                            <p><?php echo $row['deskripsi']; ?></p>
-                        </div>
-                        <div class="modal-footer">
-                            <?php if (!isset($_SESSION['user'])) { ?>
-                                <!-- Kalau belum login, munculkan modal login -->
-                                <button class="btn btn-success fw-bold" data-bs-toggle="modal"
-                                    data-bs-target="#modalLogin" data-bs-dismiss="modal">
-                                    Pesan Sekarang
-                                </button>
-                            <?php } else { ?>
-                                <!-- Kalau sudah login, langsung ke halaman pesan -->
-                                <a href="pesan.php?destinasi=<?= $row['id'] ?>"  class="btn btn-success fw-bold">
-                                    Pesan Sekarang
-                                </a>
-                            <?php } ?>
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <?php } ?>
+          </div>
         </div>
+      <?php } ?>
     </div>
 
-    <!-- Modal Login -->
-    <div class="modal fade" id="modalLogin" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header bg-primary text-white">
-                    <h5 class="modal-title">Login Dulu</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    <p class="text-center">Anda harus login terlebih dahulu untuk memesan paket wisata.</p>
-                    <div class="text-center">
-                        <a href="Admin/login.php" class="btn btn-success fw-bold">Login</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Tombol WhatsApp -->
-    <a href="https://wa.me/6281913204811?text=Hallo,%20saya%20ingin%20memesan%20tiket%20perjalanan%20treveling..."
-        target="_blank" rel="noopener" class="whatsapp-float">
-        <i class="fab fa-whatsapp"></i> Live Chat
-    </a>
-
+    <!-- Tombol Expand -->
     <div class="text-center mt-4">
-        <button id="expandBtn" class="btn btn-primary">Lihat Lebih Banyak</button>
+      <button id="expandBtn" class="btn btn-primary rounded-pill px-4"><i class="fa-solid fa-circle-down"></i> Lihat Lebih Banyak</button>
     </div>
-    <br>
-    <footer class="fo">
-        <div class="footer-blog">
-            <p>Copyright @ 2025 69Travel, All Rights Reserved</p>
+  </div>
+
+  <!-- Modal Login -->
+  <div class="modal fade" id="modalLogin" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header bg-primary text-white">
+          <h5 class="modal-title">Login Dulu</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
-    </footer>
+        <div class="modal-body">
+          <p class="text-center" style="color: #000;">Anda harus login terlebih dahulu untuk memesan paket wisata.</p>
+          <div class="text-center">
+            <a href="Admin/login.php" class="btn btn-success fw-bold">Login</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-    <!-- Script Expand -->
-    <script>
-        const expandBtn = document.getElementById('expandBtn');
-        const hiddenCards = document.querySelectorAll('.card-item.d-none');
-        let expanded = false;
+  <!-- Tombol WhatsApp -->
+  <a href="https://wa.me/6281913204811?text=Hallo,%20saya%20ingin%20memesan%20tiket%20perjalanan%20treveling..." target="_blank" rel="noopener" class="whatsapp-float">
+    <i class="fab fa-whatsapp"></i> Live Chat
+  </a>
 
-        expandBtn.addEventListener('click', () => {
-            if (!expanded) {
-                hiddenCards.forEach(card => card.classList.remove('d-none'));
-                expandBtn.textContent = "Sembunyikan";
-                expanded = true;
-            } else {
-                hiddenCards.forEach(card => card.classList.add('d-none'));
-                expandBtn.textContent = "Lihat Lebih Banyak";
-                expanded = false;
-            }
-        });
-    </script>
+  <!-- Footer -->
+  <footer>
+    <p class="text-center mb-0">Copyright © 2025 69Travel, All Rights Reserved</p>
+  </footer>
 
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Script Expand -->
+  <script>
+    const expandBtn = document.getElementById('expandBtn');
+    const hiddenCards = document.querySelectorAll('.card-item');
+    let expanded = false;
+
+    expandBtn.addEventListener('click', () => {
+      if (!expanded) {
+        hiddenCards.forEach(card => card.classList.remove('d-none'));
+        expandBtn.innerHTML = '<i class="fa-solid fa-circle-up"></i> Sembunyikan';
+        expanded = true;
+      } else {
+        hiddenCards.forEach(card => card.classList.add('d-none'));
+        expandBtn.innerHTML = '<i class="fa-solid fa-circle-down"></i> Lihat Lebih Banyak';
+        expanded = false;
+      }
+    });
+
+    // Animasi Fade Scroll
+    const faders = document.querySelectorAll('.fade-in');
+    const appearOnScroll = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('show');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.2
+    });
+    faders.forEach(fader => appearOnScroll.observe(fader));
+  </script>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>

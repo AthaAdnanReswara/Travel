@@ -10,11 +10,13 @@ if (isset($_POST['submit'])) {
     $deskripsi  = $_POST['deskripsi'];
     $harga      = $_POST['harga'];
 
+    // folder untuk simpan gambar
+    $folder = "../gambar/"; // samakan dengan yang dipakai untuk <img>
+
     // cek jika ada upload gambar baru
     if (!empty($_FILES['gambar']['name'])) {
         $gambar = $_FILES['gambar']['name'];
         $tmp    = $_FILES['gambar']['tmp_name'];
-        $folder = "gambar/";
 
         $ext_valid = ['jpg', 'jpeg', 'png'];
         $ext = strtolower(pathinfo($gambar, PATHINFO_EXTENSION));
@@ -28,10 +30,11 @@ if (isset($_POST['submit'])) {
                 }
                 $gambar_final = $newName;
             } else {
-                $gambar_final = $data['gambar'];
+                echo "<script>alert('Upload gagal! Periksa folder dan permission.'); window.history.back();</script>";
+                exit;
             }
         } else {
-            echo "<script>alert('Format gambar tidak valid! Harus jpg/png'); window.history.back();</script>";
+            echo "<script>alert('Format gambar tidak valid! Harus jpg/jpeg/png'); window.history.back();</script>";
             exit;
         }
     } else {
