@@ -22,6 +22,7 @@
       <ul>
         <li><a href="#">Home</a></li>
         <li><a href="about.php" class="active">About</a></li>
+        <li><a href="store.php" class="active">Destination</a></li>
         <li><a href="blog.php" class="active">Blog</a></li>
         <li><a href="contact.php">Contact</a></li>
         <!-- <li class="setting-menu">

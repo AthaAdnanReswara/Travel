@@ -25,6 +25,7 @@ session_start();
     <nav>
       <ul>
         <li><a href="index.php">Home</a></li>
+        <li><a href="store.php">Destination</a></li>
         <li><a href="about.php" class="active">About</a></li>
         <li><a href="blog.php" class="active">Blog</a></li>
         <li><a href="#">Contact</a></li>

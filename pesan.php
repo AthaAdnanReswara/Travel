@@ -14,40 +14,45 @@ $user_id = $_SESSION['user']['id'];
 $selected_destinasi_id = isset($_GET['destinasi']) ? intval($_GET['destinasi']) : 0;
 
 if ($selected_destinasi_id > 0) {
-    // hanya ambil destinasi sesuai id
     $destinasi_q = mysqli_query($koneksi, "SELECT * FROM destinasi WHERE id='$selected_destinasi_id'");
 } else {
-    // kalau tidak ada id, tampilkan semua
     $destinasi_q = mysqli_query($koneksi, "SELECT * FROM destinasi ORDER BY nama ASC");
 }
 
 // 🔹 fungsi simpan booking
-function simpanBooking($koneksi, $user_id, $destinasi_id, $tanggal, $jumlah_orang, $metode_bayar, $catatan) {
-    // ambil harga destinasi
+function simpanBooking($koneksi, $user_id, $destinasi_id, $tanggal, $jumlah_orang, $metode_bayar, $catatan, $penumpang) {
     $h = mysqli_query($koneksi, "SELECT harga FROM destinasi WHERE id='$destinasi_id'");
     $row = mysqli_fetch_assoc($h);
     $harga = $row['harga'];
 
     $total = $harga * $jumlah_orang;
 
-    // insert ke tabel booking
     $insert = "INSERT INTO booking 
         (user_id, destinasi_id, tanggal, jumlah_orang, metode_bayar, catatan, total, status, created_at) 
         VALUES 
         ('$user_id', '$destinasi_id', '$tanggal', '$jumlah_orang', '$metode_bayar', '$catatan', '$total', 'Pending', NOW())";
 
-    return mysqli_query($koneksi, $insert);
+    $result = mysqli_query($koneksi, $insert);
+
+    if ($result && !empty($penumpang)) {
+        $booking_id = mysqli_insert_id($koneksi);
+        foreach ($penumpang as $nama) {
+            mysqli_query($koneksi, "INSERT INTO penumpang (booking_id, nama) VALUES ('$booking_id', '".mysqli_real_escape_string($koneksi, $nama)."')");
+        }
+    }
+
+    return $result;
 }
 
-// jika form disubmit
 if (isset($_POST['simpan'])) {
     $destinasi_id = $_POST['destinasi'];
     $tanggal = $_POST['tanggal'];
     $jumlah_orang = $_POST['orang'];
     $metode_bayar = $_POST['metode'];
     $catatan = $_POST['catatan'];
+    $penumpang = isset($_POST['penumpang']) ? $_POST['penumpang'] : [];
 
-    if (simpanBooking($koneksi, $user_id, $destinasi_id, $tanggal, $jumlah_orang, $metode_bayar, $catatan)) {
+    if (simpanBooking($koneksi, $user_id, $destinasi_id, $tanggal, $jumlah_orang, $metode_bayar, $catatan, $penumpang)) {
         echo "<script>alert('Booking berhasil!'); window.location='riwayat_booking.php';</script>";
         exit();
     } else {
@@ -61,25 +66,36 @@ if (isset($_POST['simpan'])) {
 <head>
   <meta charset="UTF-8">
   <title>Booking Traveling</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
   <style>
-    .card-custom { border-radius: 12px; cursor: pointer; transition: .3s; }
-    .card-custom:hover { transform: scale(1.02); box-shadow: 0 6px 15px rgba(0,0,0,.1); }
-    .card-active { border: 2px solid #0077ff; background: #f0f8ff; }
-    .summary { background: #f8f9fa; border-radius: 12px; padding: 15px; }
-    .btn-booking { display:inline-block; background:linear-gradient(135deg,#023085ff,#0077ffff); color:#fff; font-weight:600; font-size:16px; padding:12px 24px; border:none; border-radius:50px; cursor:pointer; box-shadow:0 4px 10px rgba(37,211,102,.3); transition:.3s; }
-    .btn-booking:hover { background:linear-gradient(135deg,#09c9c9ff,#0a2497ff); transform:translateY(-2px) scale(1.05); box-shadow:0 6px 15px rgba(18,140,126,.4); }
+    body { background: #f8fafc; font-family: 'Segoe UI', Tahoma, sans-serif; }
+    .card-custom { border-radius: 15px; transition: .3s; }
+    .card-custom:hover { transform: scale(1.02); box-shadow: 0 6px 18px rgba(0,0,0,.1); }
+    .card-active { border: 2px solid #0077ff; background: #eef6ff; }
+    .summary { background: #ffffff; border-radius: 15px; padding: 20px; box-shadow: 0 4px 12px rgba(0,0,0,.05); }
+    .btn-booking {
+      display:inline-block; background:linear-gradient(135deg,#004aad,#0077ff);
+      color:#fff; font-weight:600; font-size:16px;
+      padding:12px 24px; border:none; border-radius:50px;
+      cursor:pointer; transition:.3s;
+    }
+    .btn-booking:hover {
+      background:linear-gradient(135deg,#0077ff,#004aad);
+      transform:translateY(-2px) scale(1.05);
+      box-shadow:0 6px 15px rgba(0,0,0,.2);
+    }
+    .form-label { font-weight: 600; }
   </style>
 </head>
 <body class="p-4">
 <div class="container">
   <div class="row">
     <!-- Form Booking -->
-    <div class="col-md-8">
-      <div class="card card-custom shadow-sm p-3">
+    <div class="col-lg-8">
+      <div class="card card-custom shadow-sm p-4">
         <form method="POST">
-          <!-- form data diri -->
           <div class="row g-3">
             <div class="col-md-6">
               <label class="form-label">Nama Lengkap</label>
@@ -108,6 +124,7 @@ if (isset($_POST['simpan'])) {
                 <option value="Kartu Kredit">Kartu Kredit</option>
               </select>
             </div>
+            <div id="list-nama" class="col-12 mt-2"></div>
             <div class="col-12">
               <label class="form-label">Catatan (opsional)</label>
               <input type="text" class="form-control" name="catatan" placeholder="Request khusus, jadwal, dll">
@@ -116,7 +133,7 @@ if (isset($_POST['simpan'])) {
 
           <!-- Pilih Destinasi -->
           <div class="mt-4">
-            <h6>Destinasi yang dipilih</h6>
+            <h6 class="fw-bold">Destinasi yang dipilih</h6>
             <div class="row">
               <?php while ($d = mysqli_fetch_assoc($destinasi_q)) { ?>
               <div class="col-12">
@@ -132,25 +149,26 @@ if (isset($_POST['simpan'])) {
 
           <!-- Estimasi & Button -->
           <div class="mt-3">
-            <p>Estimasi total: <span class="fw-bold text-primary" id="totalHarga">Rp0</span></p>
-            <button type="submit" name="simpan" class="btn-booking">
-              <i class="bi bi-cart-check"></i> Booking Online
-            </button>
+            <a id="waLink" target="_blank" class="btn-booking ms-2" style="text-decoration:none;">
+              <i class="bi bi-whatsapp"></i> Booking via WhatsApp
+            </a>
           </div>
         </form>
       </div>
     </div>
 
     <!-- Ringkasan -->
-    <div class="col-md-4">
-      <div class="summary shadow-sm">
-        <h6>Ringkasan</h6>
+    <div class="col-lg-4 mt-3 mt-lg-0">
+      <div class="summary">
+        <h6 class="fw-bold"><i class="bi bi-receipt"></i> Ringkasan</h6>
         <p id="ringkasan">
           Destinasi: - <br>
           Tanggal: - <br>
           Orang: 1 <br>
-          Metode Bayar: Transfer
+          Metode Bayar: Transfer <br>
+          Total: Rp0
         </p>
+        <p id="totalHarga" class="fw-bold text-primary"></p>
       </div>
     </div>
   </div>
@@ -159,15 +177,39 @@ if (isset($_POST['simpan'])) {
 <script>
   let harga = parseInt(document.querySelector("input[name='destinasi']")?.parentElement.querySelector("p")?.innerText.replace(/[^\d]/g, "")) || 0;
 
-  document.getElementById("orang").addEventListener("input", updateTotal);
-  document.querySelector("select[name='metode']").addEventListener("change", updateRingkasan);
-  document.querySelector("input[name='tanggal']").addEventListener("change", updateRingkasan);
+  const orangInput = document.getElementById("orang");
+  const listNama = document.getElementById("list-nama");
+  const waLink = document.getElementById("waLink");
+  const waNumber = "628984287905"; // ganti dengan nomor WA admin
+
+  orangInput.addEventListener("input", () => {
+    updateTotal();
+    generateNamaFields();
+  });
+
+  function generateNamaFields() {
+    listNama.innerHTML = "";
+    let jumlah = parseInt(orangInput.value) || 0;
+
+    if (jumlah > 1) {
+      for (let i = 1; i <= jumlah; i++) {
+        let div = document.createElement("div");
+        div.classList.add("mb-2");
+        div.innerHTML = `
+          <label class="form-label">Nama Penumpang ${i}</label>
+          <input type="text" class="form-control" name="penumpang[]" required>
+        `;
+        listNama.appendChild(div);
+      }
+    }
+  }
 
   function updateTotal() {
-    let orang = parseInt(document.getElementById("orang").value) || 1;
+    let orang = parseInt(orangInput.value) || 1;
     let total = harga * orang;
     document.getElementById("totalHarga").innerText = "Rp" + total.toLocaleString();
     updateRingkasan();
+    updateWALink();
   }
 
   function updateRingkasan() {
@@ -183,7 +225,39 @@ if (isset($_POST['simpan'])) {
       "Metode Bayar: " + metode;
   }
 
+  function updateWALink() {
+    let destinasiLabel = document.querySelector(".card-active h6")?.innerText || "-";
+    let tanggal = document.querySelector("input[name='tanggal']").value || "-";
+    let orang = document.getElementById("orang").value;
+    let metode = document.querySelector("select[name='metode']").value;
+    let nama = document.querySelector("input[name='nama']").value || "-";
+    let waUser = document.querySelector("input[name='wa']").value || "-";
+
+    // kumpulkan nama penumpang
+    let penumpangInputs = document.querySelectorAll("input[name='penumpang[]']");
+    let penumpangList = "";
+    penumpangInputs.forEach((el, i) => {
+      penumpangList += `%0A- ${el.value}`;
+    });
+
+    let pesan = `Halo Admin, saya ingin booking travel:%0A
+*Nama:* ${nama}%0A
+*No. WA:* ${waUser}%0A
+*Destinasi:* ${destinasiLabel}%0A
+*Tanggal:* ${tanggal}%0A
+*Jumlah Orang:* ${orang}%0A
+*Metode Bayar:* ${metode}%0A
+*Penumpang:* ${penumpangList}`;
+
+    waLink.href = `https://wa.me/${waNumber}?text=${pesan}`;
+  }
+
+  document.querySelectorAll("input, select").forEach(el => {
+    el.addEventListener("input", updateWALink);
+  });
+
   updateTotal();
+  updateWALink();
 </script>
 </body>
 </html>
