@@ -22,7 +22,7 @@ if (isset($_POST['simpan'])) {
                 VALUES ('$nama', '$deskripsi', '$harga', '$gambar', NOW())";
 
         if (mysqli_query($koneksi, $sql)) {
-            echo "<script>alert('Destinasi berhasil ditambahkan!'); window.location='destinasi.php';</script>";
+            echo "<script>alert('Destinasi berhasil ditambahkan!'); window.location='?page=destinasi';</script>";
         } else {
             echo "Error: " . mysqli_error($koneksi);
         }

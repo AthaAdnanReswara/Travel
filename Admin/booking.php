@@ -1,4 +1,5 @@
 <?php
+@session_start();
 include 'koneksi.php';
 
 // cek apakah user admin
@@ -7,14 +8,27 @@ if (!isset($_SESSION['user']) || $_SESSION['user']['level'] != 'admin') {
     exit();
 }
 
-// ubah status booking jika ada request
-if (isset($_GET['aksi']) && isset($_GET['id'])) {
-    $id = intval($_GET['id']);
-    $aksi = $_GET['aksi'];
+/**
+ * Fungsi untuk update status booking
+ */
+function ubahStatusBooking($koneksi, $id, $status) {
+    $id = intval($id);
+    $status = mysqli_real_escape_string($koneksi, $status);
 
-    if (in_array($aksi, ['Pending','Lunas','Batal'])) {
-        mysqli_query($koneksi, "UPDATE booking SET status='$aksi' WHERE id='$id'");
-        echo "<script>alert('Status booking diperbarui!');location.href='dashboard_booking.php';</script>";
+    if (in_array($status, ['Pending','Lunas','Batal'])) {
+        $sql = "UPDATE booking SET status='$status' WHERE id='$id'";
+        return mysqli_query($koneksi, $sql);
+    }
+    return false;
+}
+
+// jika ada aksi update
+if (isset($_GET['aksi']) && isset($_GET['id'])) {
+    if (ubahStatusBooking($koneksi, $_GET['id'], $_GET['aksi'])) {
+        echo "<script>alert('Status booking berhasil diperbarui!');location.href='dashboard_booking.php';</script>";
+        exit();
+    } else {
+        echo "<script>alert('Gagal memperbarui status!');location.href='dashboard_booking.php';</script>";
         exit();
     }
 }
@@ -35,7 +49,7 @@ $q = mysqli_query($koneksi, "
   <table class="table table-bordered table-striped">
     <thead class="table-dark">
       <tr>
-        <th>no</th>
+        <th>No</th>
         <th>Nama User</th>
         <th>WhatsApp</th>
         <th>Email</th>
@@ -58,13 +72,16 @@ $q = mysqli_query($koneksi, "
         <td><?= $row['tanggal']; ?></td>
         <td><?= $row['jumlah_orang']; ?></td>
         <td>Rp<?= number_format($row['total'],0,',','.'); ?></td>
-        <td><span class="badge bg-<?= $row['status']=='Lunas'?'success':($row['status']=='Batal'?'danger':'warning'); ?>">
-            <?= $row['status']; ?>
-        </span></td>
         <td>
-          <a href="?aksi=Pending&id=<?= $row['id']; ?>" class="btn btn-sm btn-secondary">Pending</a>
-          <a href="?aksi=Lunas&id=<?= $row['id']; ?>" class="btn btn-sm btn-success">Lunas</a>
-          <a href="?aksi=Batal&id=<?= $row['id']; ?>" class="btn btn-sm btn-danger">Batal</a>
+          <span class="badge bg-<?= $row['status']=='Lunas'?'success':($row['status']=='Batal'?'danger':'warning'); ?>">
+            <?= $row['status']; ?>
+          </span>
+        </td>
+        <td>
+          <a href="?page=booking&aksi=pending&id<?= $row['id']; ?>" class="btn btn-sm btn-secondary">Pending</a>
+          <a href="?page=booking&aksi=lunas&id<?= $row['id']; ?>" class="btn btn-sm btn-success">Lunas</a>
+          <a href="?page=booking&aksi=Batal&id=<?= $row['id']; ?>" class="btn btn-sm btn-danger">Batal</a>
+          
         </td>
       </tr>
       <?php } ?>
