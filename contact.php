@@ -15,7 +15,7 @@ session_start();
 <html>
   <!-- Top Info -->
   <div class="top-bar">
-    <div class="left-info">69travel@gmail.com</div>
+    <div class="left-info"><i class="fa-solid fa-envelope"></i> 69travel@gmail.com</div>
     <div class="right-info">Bandar Lampung, Teluk Betung</div>
   </div>
 
