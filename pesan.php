@@ -117,6 +117,21 @@ if (isset($_POST['simpan'])) {
     <div class="col-lg-8">
       <div class="card card-custom shadow-sm p-4">
         <form method="POST">
+          <!-- Pilih Destinasi -->
+          <div class="mt-4">
+            <h6 class="fw-bold">Destinasi yang dipilih</h6>
+            <div class="row">
+              <?php while ($d = mysqli_fetch_assoc($destinasi_q)) { ?>
+              <div class="col-12">
+                <input type="hidden" name="destinasi" value="<?= $d['id']; ?>">
+                <div class="card card-custom p-3 text-center card-active">
+                  <h6 class="mb-1"><?= $d['nama']; ?></h6>
+                  <p class="text-muted mb-0">Rp<?= number_format($d['harga'], 0, ',', '.'); ?></p>
+                </div>
+              </div>
+              <?php } ?>
+            </div>
+          </div>
           <div class="row g-3">
             <div class="col-md-6">
               <label class="form-label">Nama Lengkap</label>
@@ -152,21 +167,7 @@ if (isset($_POST['simpan'])) {
             </div>
           </div>
 
-          <!-- Pilih Destinasi -->
-          <div class="mt-4">
-            <h6 class="fw-bold">Destinasi yang dipilih</h6>
-            <div class="row">
-              <?php while ($d = mysqli_fetch_assoc($destinasi_q)) { ?>
-              <div class="col-12">
-                <input type="hidden" name="destinasi" value="<?= $d['id']; ?>">
-                <div class="card card-custom p-3 text-center card-active">
-                  <h6 class="mb-1"><?= $d['nama']; ?></h6>
-                  <p class="text-muted mb-0">Rp<?= number_format($d['harga'], 0, ',', '.'); ?></p>
-                </div>
-              </div>
-              <?php } ?>
-            </div>
-          </div>
+          
 
           <!-- Estimasi & Button -->
           <div class="mt-3">
