@@ -53,7 +53,7 @@ if (isset($_POST['simpan'])) {
     $penumpang = isset($_POST['penumpang']) ? $_POST['penumpang'] : [];
 
     if (simpanBooking($koneksi, $user_id, $destinasi_id, $tanggal, $jumlah_orang, $metode_bayar, $catatan, $penumpang)) {
-        echo "<script>alert('Booking berhasil!'); window.location='riwayat_booking.php';</script>";
+        echo "<script>alert('Booking berhasil!'); window.location='store.php';</script>";
         exit();
     } else {
         echo "Error: " . mysqli_error($koneksi);
@@ -175,9 +175,9 @@ if (isset($_POST['simpan'])) {
               <i class="bi bi-whatsapp"></i> Booking via WhatsApp
             </a>
 
-            <button type="submit" name="simpan" class="btn-booking save">
+            <!-- <button type="submit" name="simpan" class="btn-booking save">
               <i class="bi bi-save"></i> Simpan Booking
-            </button>
+            </button> -->
 
             <a href="store.php" class="btn-booking back">
               <i class="bi bi-arrow-left"></i> Kembali
@@ -210,7 +210,7 @@ if (isset($_POST['simpan'])) {
   const orangInput = document.getElementById("orang");
   const listNama = document.getElementById("list-nama");
   const waLink = document.getElementById("waLink");
-  const waNumber = "628984287905"; // ganti dengan nomor WA admin
+  const waNumber = "6281913204811"; // ganti dengan nomor WA admin
 
   orangInput.addEventListener("input", () => {
     updateTotal();
@@ -247,12 +247,14 @@ if (isset($_POST['simpan'])) {
     let tanggal = document.querySelector("input[name='tanggal']").value || "-";
     let orang = document.getElementById("orang").value;
     let metode = document.querySelector("select[name='metode']").value;
+    let total = harga * orang;
 
     document.getElementById("ringkasan").innerHTML =
       "Destinasi: " + destinasiLabel + "<br>" +
       "Tanggal: " + tanggal + "<br>" +
       "Orang: " + orang + "<br>" +
-      "Metode Bayar: " + metode;
+      "Metode Bayar: " + metode + "<br>" +
+      "Total: Rp" + total.toLocaleString();
   }
 
   function updateWALink() {
@@ -262,6 +264,7 @@ if (isset($_POST['simpan'])) {
     let metode = document.querySelector("select[name='metode']").value;
     let nama = document.querySelector("input[name='nama']").value || "-";
     let waUser = document.querySelector("input[name='wa']").value || "-";
+    let total = harga * orang;
 
     // kumpulkan nama penumpang
     let penumpangInputs = document.querySelectorAll("input[name='penumpang[]']");
@@ -277,6 +280,7 @@ if (isset($_POST['simpan'])) {
 *Tanggal:* ${tanggal}%0A
 *Jumlah Orang:* ${orang}%0A
 *Metode Bayar:* ${metode}%0A
+*Total:* Rp${total.toLocaleString()}%0A
 *Penumpang:* ${penumpangList}`;
 
     waLink.href = `https://wa.me/${waNumber}?text=${pesan}`;
@@ -289,5 +293,6 @@ if (isset($_POST['simpan'])) {
   updateTotal();
   updateWALink();
 </script>
+
 </body>
 </html>

@@ -18,6 +18,7 @@ if (!isset($_SESSION['user']) || $_SESSION['role'] != "admin") {
     <meta name="author" content="">
 
     <title>Travel</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
