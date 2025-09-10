@@ -50,7 +50,7 @@ session_start();
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C8.14 2 5 5.14 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.86-3.14-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z"/></svg>
         <div>
           <strong>Alamat</strong>
-          <span>Jl. Contoh No. 123, Kota Kamu</span>
+          <span>Jl. Ikan,Teluk Betung, Bandar Lampung</span>
         </div>
       </div>
 
@@ -58,7 +58,7 @@ session_start();
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.62 10.79a15.91 15.91 0 006.59 6.59l2.2-2.2a1 1 0 011.02-.24c1.12.37 2.33.57 3.57.57a1 1 0 011 1V21a1 1 0 01-1 1C10.85 22 2 13.15 2 2a1 1 0 011-1h3.5a1 1 0 011 1c0 1.24.2 2.45.57 3.57a1 1 0 01-.24 1.02l-2.2 2.2z"/></svg>
         <div>
           <strong>Telepon</strong>
-          <a href="tel:+6281234567890">+62 812-3456-7890</a>
+          <a href="tel:+6281234567890">+62 898-4287-905</a>
         </div>
       </div>
 
@@ -66,7 +66,7 @@ session_start();
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 4H4a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2V6a2 2 0 00-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
         <div>
           <strong>Email</strong>
-          <a href="mailto:halo@contoh.com">halo@contoh.com</a>
+          <a href="mailto:halo@contoh.com">69Travel@gmail.com</a>
         </div>
       </div>
 
@@ -121,4 +121,4 @@ session_start();
       <p>Copyright @ 2025 69Travel, All Rights Reserved</p>
     </div>
   </footer>
-
+**
